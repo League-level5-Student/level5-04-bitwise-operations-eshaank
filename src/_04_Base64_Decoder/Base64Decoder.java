@@ -49,22 +49,38 @@ public class Base64Decoder {
 	// characters long and return an array of 3 bytes (24 bits). The byte
 	// array should be the binary value of the encoded characters.
 	public static byte[] convert4CharsTo24Bits(String s) {
-		String num = "";
+		byte[] arr = new byte[3];
+		byte element = 0;
 		
-		for (int i = 0; i < s.length(); i++) {
-			char letter = s.charAt(i);
-			for (int j = 7; j >= 0; j--) {
-				byte numShift = (byte) (letter >> j);
-
-				if ((numShift & 1) > 0) {
-					num += "1";
-				} else {
-					num += "0";
-				}
+		for (int i = 0; i < base64Chars.length; i++) {
+			if(base64Chars[i] != s.charAt(1)) {
+				element++;
+			}
+			else {
+				arr[1] = element;
 			}
 		}
-		System.out.println(num);
-		return null;
+		
+		String num = "";
+		for (int i = 7; i >= 0; i--) {
+			byte numShift = (byte) (arr[1] >> i);
+			
+			if ((numShift & 1) > 0) {
+				num += "1";
+			}
+			else {
+				num += "0";
+			}
+		}
+		System.out.print(num);
+		
+		
+		//for (int i = 0; i < arr.length; i++) {
+			System.out.println(arr[1]);
+		//}
+		
+		return arr;
+		
 	}
 
 	// 3. Complete this method so that it takes in a string of any length
